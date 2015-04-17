@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<widget xmlns   = "http://www.w3.org/ns/widgets"
+        id          = "com.phonegap.catrobat.pocketstats"
+        versionCode = "1"
+        version     = "0.0.1" >
+
+  <!-- versionCode is optional and Android only -->
+
+  <name>PocketStats</name>
+
+  <description>
+    Some statistics for PocketCode
+  </description>
+
+  <author href="https://github.com/iskdjim/TeamAlf.git">
+    Team Alf
+  </author>
+
+</widget>

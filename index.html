@@ -3,10 +3,29 @@
 <head>
     <title>PocketStats</title>
     <script src="phonegap.js"></script>
+    <script src="jquery.js"></script>
+    <script src="js/api_calls.js"></script>
+   
+    <script language="javascript" type="text/javascript">
+      (function($){
+        $(document).ready( function() {
+
+			jQuery.getJSON( "https://web-test.catrob.at/pocketcode/api/projects/mostViewed.json?limit=5&offset=0", function( data ) {
+	  console.log(data);
+	  
+	});
+		
+		
+		})
+		
+	
+	 })(jQuery);
+
+	</script>
 </head>
 <body>
 
-PocketStats... v0.0.1
+
 
 </body>
 </html>

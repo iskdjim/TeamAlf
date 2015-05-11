@@ -123,7 +123,7 @@ function generateBubble(bubbleData){
 	  node.append("circle")
 	      .attr("r", function(d) { return d.r; })
 	      .style("fill", "#fff")
-	      .on("click", function(d){ alert(d.id)});
+	      .on("click", function(d){ alert("id"+d.id)});
 	
 	  node.append("text")
 	      .attr("dy", ".3em")

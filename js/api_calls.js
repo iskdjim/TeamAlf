@@ -97,12 +97,11 @@ function generateBubble(bubbleData){
 	var diameter = 460,
     format = d3.format(",d"),
     color = d3.scale.category20c();
-    alert($(window).height());
+   
 
 	var bubble = d3.layout.pack()
 	    .sort(null)
-	    .size([$(window).width(), $(window).height()])
-	    .padding(1.5);
+	    .size([$(window).width()-20, $(window).height()])
 	
 	var svg = d3.select("body #svg-bubble")
 	    .attr("class", "bubble");

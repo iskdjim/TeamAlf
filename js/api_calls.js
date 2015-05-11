@@ -30,8 +30,8 @@ function showData(data, type){
 function generateTree(treeData){
 		
 	// ************** Generate the tree diagram	 *****************
-	var margin = {top: 40, right: 120, bottom: 20, left: 120},
-		width = 960 - margin.right - margin.left,
+	var margin = {top: 40, right: 10, bottom: 20, left: 10},
+		width = 460 - margin.right - margin.left,
 		height = 500 - margin.top - margin.bottom;
 		
 	var i = 0;
@@ -96,7 +96,7 @@ function generateTree(treeData){
 }
 
 function generateBubble(bubbleData){
-	var diameter = 960,
+	var diameter = 460,
     format = d3.format(",d"),
     color = d3.scale.category20c();
 

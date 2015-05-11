@@ -43,8 +43,6 @@ function generateTree(treeData){
 		.projection(function(d) { return [d.x, d.y]; });
 	
 	var svg = d3.select("body #svg-tree")
-		.attr("width", width + margin.right + margin.left)
-		.attr("height", height + margin.top + margin.bottom)
 	  .append("g")
 		.attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 	
@@ -106,8 +104,6 @@ function generateBubble(bubbleData){
 	    .padding(1.5);
 	
 	var svg = d3.select("body #svg-bubble")
-	    .attr("width", diameter)
-	    .attr("height", diameter)
 	    .attr("class", "bubble");
 	
 	  var node = svg.selectAll(".node")

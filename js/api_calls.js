@@ -22,7 +22,7 @@ function showData(data, type){
 		var treeData = [{"name":"Catrobat Top Viewed", "parent": "null", "children": children_tree}];
 		var bubbleData = {"name":"Catrobat Top Viewed", "children": children_bubble};
 		generateBubble(bubbleData);	
-		generateTree(treeData);
+		//generateTree(treeData);
 	
 	}
 }
@@ -97,10 +97,11 @@ function generateBubble(bubbleData){
 	var diameter = 460,
     format = d3.format(",d"),
     color = d3.scale.category20c();
+    alert($(window).height());
 
 	var bubble = d3.layout.pack()
 	    .sort(null)
-	    .size([diameter, diameter])
+	    .size([$(window).width(), $(window).height()])
 	    .padding(1.5);
 	
 	var svg = d3.select("body #svg-bubble")

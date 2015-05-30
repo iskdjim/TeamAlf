@@ -1,3 +1,5 @@
+var children_prog;
+
 function getMostViewed() {
 	$.get('https://jsonp.afeld.me/?url=https://pocketcode.org/api/projects/mostViewed.json?limit=10&offset=0', function(data){
 		if(data){
@@ -8,10 +10,22 @@ function getMostViewed() {
 	});
 }
 
+function getMostRemixed() {
+	$.get('https://jsonp.afeld.me/?url=https://web-test.catrob.at/pocketcode/api/programs/getMostRemixed.json?limit=10', function(data){
+		if(data){
+			showData(data,"most-remixed");
+		}else{
+			return 0;
+		}
+	});
+}
+
+
 function getChildsForProject(id) {
 	var project_id = id;
-	$.get('https://jsonp.afeld.me/?url=https://pocketcode.org/api/projects/mostViewed.json?limit=10&offset=0', function(data){
+	$.get('https://jsonp.afeld.me/?url=https://web-test.catrob.at/pocketcode/api/programs/getRemixOf.json?id='+project_id+'&depth=5', function(data){
 		if(data){
+			//console.log(data);
 			showData(data,"remixed-of");
 		}else{
 			return 0;
@@ -21,19 +35,23 @@ function getChildsForProject(id) {
 
 
 function showData(data, type){
-	if(type == "most-viewed"){
+	if(type == "most-viewed" || type == "most-remixed"){
 		data = data.CatrobatProjects;
 		//var children_tree = [];
 		var children_bubble = [];
-		var children_prog = [];
 			
-			
+		
 		$.each(data, function(i,val){
 			//console.log(val)
-			//children_tree.push({"name":val.ProjectName,"parent":"Catrobat Top Viewed"});
-			children_bubble.push({"name":val.ProjectName,"size":val.Views, "id":val.ProjectId});
+			
+			if(type == "most-viewed"){
+				children_bubble.push({"name":val.ProjectName,"size":val.Views, "id":val.ProjectId});
+			}else{
+				children_bubble.push({"name":val.ProjectName,"size":val.RemixCount, "id":val.ProjectId});
+			}
 		});
-
+	//console.log(children_bubble);
+	//console.log("fu");
 		//console.log(children);
 		//var treeData = [{"name":"Catrobat Top Viewed", "parent": "null", "children": children_tree}];
 		var bubbleData = {"name":"Catrobat Top Viewed", "children": children_bubble};
@@ -42,18 +60,44 @@ function showData(data, type){
 
 	
 	}else if(type = "remixed-of"){
+		//data = data.CatrobatProjects;
+		children_prog = [];
+		console.log(data);
+		children_prog.push({"key":data.id, "name":data.name, "title":data.name});
+		$.each(data.childs, function(i,val){
 		
-		var children_prog = [];
+			//if(val.childs.length() > 0){
+			parent = data.id;
+			children_prog.push({"key":val.id, "name":val.name, "title":val.name, "parent":parent});	
+			if(val.childs != null){
+				getRemixedChildren(val);
+			}
+			//}
+			//if(val.RemixOf){
+			//	children_prog.push({"key":val.ProjectId, "name":val.ProjectName, "title":val.ProjectName, "parent":val.RemixOf});	
+			//}else{
+			//	children_prog.push({"key":val.ProjectId, "name":val.ProjectName, "title":val.ProjectName});
+			//}
 			
-		$.each(data, function(i,val){
-			children_prog.push({"key":val.ProjectId, "name":val.ProjectName, "title":val.ProjectName, "parent":val.PartendId});
 		});
 
+		//console.log(children_prog);
 		prog_data = { "class": "go.TreeModel", "nodeDataArray": children_prog };
 
 		initGo();
 	
 	}
+}
+
+function getRemixedChildren(element){
+	$.each(element.childs, function(i,val){
+		parent = element.id;
+		children_prog.push({"key":val.id, "name":val.name, "title":val.name, "parent":parent});	
+		if(val.childs != null){	
+			getRemixedChildren(val);
+		}
+			
+	});	
 }
 
 function hidder(show){
@@ -156,7 +200,7 @@ function generateBubble(bubbleData){
 	      .attr("transform", function(d) { return "translate(" + d.x + "," + d.y + ")"; });
 	
 	  node.append("title")
-	      .text(function(d) { console.log(d.className); var name = d.className.ProjectId; return name + ": " + format(d.value); });
+	      .text(function(d) { var name = d.className.ProjectId; return name + ": " + format(d.value); });
 	
 	  node.append("circle")
 	      .attr("r", function(d) { return d.r; })

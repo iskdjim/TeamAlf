@@ -15,4 +15,9 @@ function Index() {
   	hidder("bubble");
     getMostViewed();
   };
+  
+  self.getMostRemixed = function() {
+  	hidder("bubble");
+    getMostRemixed();
+  };
 }

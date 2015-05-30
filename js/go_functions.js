@@ -1,8 +1,9 @@
-function init() {
+function initGo() {
+	hidder("remixed");
     if (window.goSamples) goSamples();  // init for these samples -- you don't need to call this
     var $ = go.GraphObject.make;  // for conciseness in defining templates
     myDiagram =
-      $(go.Diagram, "myDiagram", // must be the ID or reference to div
+      $(go.Diagram, "remixed", // must be the ID or reference to div
         {
           initialContentAlignment: go.Spot.Center,
           // make sure users can only create trees
@@ -244,9 +245,9 @@ function init() {
     document.getElementById("mySavedModel").value = myDiagram.model.toJson();
     myDiagram.isModified = false;
   }
-  function load(data) {
+  function load() {
     //myDiagram.model = go.Model.fromJson(document.getElementById("mySavedModel").value);
   
- 	myDiagram.model = go.Model.fromJson(data);
+ 	myDiagram.model = go.Model.fromJson(prog_data);
     
   }

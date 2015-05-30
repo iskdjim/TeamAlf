@@ -8,23 +8,65 @@ function getMostViewed() {
 	});
 }
 
+function getChildsForProject(id) {
+	var project_id = id;
+	$.get('https://jsonp.afeld.me/?url=https://pocketcode.org/api/projects/mostViewed.json?limit=10&offset=0', function(data){
+		if(data){
+			showData(data,"remixed-of");
+		}else{
+			return 0;
+		}
+	});
+}
+
+
 function showData(data, type){
 	if(type == "most-viewed"){
 		data = data.CatrobatProjects;
-		var children_tree = [];
+		//var children_tree = [];
 		var children_bubble = [];
+		var children_prog = [];
+			
+			
 		$.each(data, function(i,val){
 			//console.log(val)
-			children_tree.push({"name":val.ProjectName,"parent":"Catrobat Top Viewed"});
+			//children_tree.push({"name":val.ProjectName,"parent":"Catrobat Top Viewed"});
 			children_bubble.push({"name":val.ProjectName,"size":val.Views, "id":val.ProjectId});
 		});
+
 		//console.log(children);
-		var treeData = [{"name":"Catrobat Top Viewed", "parent": "null", "children": children_tree}];
+		//var treeData = [{"name":"Catrobat Top Viewed", "parent": "null", "children": children_tree}];
 		var bubbleData = {"name":"Catrobat Top Viewed", "children": children_bubble};
 		generateBubble(bubbleData);	
 		//generateTree(treeData);
+
+	
+	}else if(type = "remixed-of"){
+		
+		var children_prog = [];
+			
+		$.each(data, function(i,val){
+			children_prog.push({"key":val.ProjectId, "name":val.ProjectName, "title":val.ProjectName, "parent":val.PartendId});
+		});
+
+		prog_data = { "class": "go.TreeModel", "nodeDataArray": children_prog };
+
+		initGo();
 	
 	}
+}
+
+function hidder(show){
+	
+	$.each($('.row .page-chart'), function(i,val){
+		//console.log(val);
+		if(show == $(val).attr('id')){
+			$(val).show();
+		}else{
+			$(val).hide();
+		}
+	});
+	
 }
 
 function generateTree(treeData){
@@ -119,7 +161,7 @@ function generateBubble(bubbleData){
 	  node.append("circle")
 	      .attr("r", function(d) { return d.r; })
 	      .style("fill", "#fff")
-	      .on("click", function(d){ alert("id:"+d.id)});
+	      .on("click", function(d){ getChildsForProject(d.id)});
 	
 	  node.append("text")
 	      .attr("dy", ".3em")

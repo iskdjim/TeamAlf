@@ -41,6 +41,11 @@ h1{
 	font-size:30px;
 }
 
-#myDiagram{
-	background-color:#fff !important;
+#remixed{
+	border: solid 1px black; 
+	height: 500px
+}
+
+#wrapper, #page-content-wrapper,.container-fluid, .row, .col-lg-12, #bubble {
+	height:100%;
 }

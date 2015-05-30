@@ -14,17 +14,22 @@
     <link rel="stylesheet" href="css/simple-sidebar.css">
     <!-- CSS Custom-->
     <link rel="stylesheet" href="css/custom/index.css">
+    <link rel="stylesheet" href="css/style.css">
+
 
     <!-- JavaScript -->
     <script src="phonegap.js"></script>
     <script src="js/jquery.js"></script>
     <script src="js/bootstrap.min.js"></script>
     <script src="js/d3.js" charset="utf-8"></script>
+    <script src="js/go.js"></script>
     <!-- JavaScript Custom-->
     <script src="js/custom/index.js"></script>
     <script src="js/api_calls.js"></script>
     
-    <script src="go_functions.js"></script>
+    <script src="js/go_functions.js"></script>
+   
+   
 
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -49,6 +54,7 @@
             <li>
                 <a href="#" onclick="index.getMostViewed()">Most Viewed</a>
             </li>
+            
         </ul>
     </div>
     <!-- /#sidebar-wrapper -->
@@ -61,7 +67,10 @@
                     <div>
                         <a href="#menu-toggle" class="btn btn-default" id="menu-toggle">Toggle Menu</a>
                     </div>
-					<div id="myDiagram" style="background-color: #696969; border: solid 1px black; height: 500px"></div>
+                    <div id="bubble" class="page-chart">
+                   		<svg id="svg-bubble"></svg>
+                    </div>
+					<div id="remixed"  class="page-chart"></div>
                 </div>
             </div>
         </div>

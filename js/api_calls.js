@@ -1,7 +1,8 @@
 var children_prog;
+var apiurl = "https://pocketcode.org/api/projects/";
 
 function getMostViewed() {
-	$.get('https://jsonp.afeld.me/?url=https://pocketcode.org/api/projects/mostViewed.json?limit=10&offset=0', function(data){
+	$.get('https://jsonp.afeld.me/?url='+apiurl+'/mostViewed.json?limit=10&offset=0', function(data){
 		if(data){
 			showData(data,"most-viewed");
 		}else{
@@ -11,9 +12,12 @@ function getMostViewed() {
 }
 
 function getMostRemixed() {
-	$.get('https://jsonp.afeld.me/?url=https://web-test.catrob.at/pocketcode/api/programs/getMostRemixed.json?limit=10', function(data){
+	$.get('https://jsonp.afeld.me/?url='+apiurl+'/getMostRemixed.json?limit=10', function(data){
 		if(data){
-			showData(data,"most-remixed");
+			//showData(data,"most-remixed");
+			data = {"id":"1","desc":"Executive office","children":[{"id":"2","desc":"Sales","hasChild":true},{"id":"3","desc":"Marketing","hasChild":true},{"id":"4","desc":"Development","hasChild":true}]};
+			orgChart.initTree({id: "#remixed", data: data, modus: "diagonal", loadFunc: loadChilds});
+
 		}else{
 			return 0;
 		}
@@ -23,15 +27,26 @@ function getMostRemixed() {
 
 function getChildsForProject(id) {
 	var project_id = id;
-	$.get('https://jsonp.afeld.me/?url=https://web-test.catrob.at/pocketcode/api/programs/getRemixOf.json?id='+project_id+'&depth=5', function(data){
+	$.get('https://jsonp.afeld.me/?url='+apiurl+'/getRemixOf.json?id='+project_id+'&depth=5', function(data){
 		if(data){
 			//console.log(data);
+			data = {"id":"1","desc":"Executive office","children":[{"id":"2","desc":"Sales","hasChild":true},{"id":"3","desc":"Marketing","hasChild":true},{"id":"4","desc":"Development","hasChild":true}]};
 			showData(data,"remixed-of");
 		}else{
 			return 0;
 		}
 	});
 }
+
+   
+function loadChilds(actualElement, successFunction) {
+   $.getJSON("https://jsonp.afeld.me/?url=http://blog.zubasoft.at/Examples/D3.js/OrgChart/getPositions.php?id=" + actualElement.id, 
+          function(data) {
+             successFunction(data);
+          });
+}
+
+
 
 
 function showData(data, type){

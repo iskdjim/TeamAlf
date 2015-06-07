@@ -17,7 +17,7 @@ function Index() {
   };
   
   self.getMostRemixed = function() {
-  	hidder("bubble");
+  	hidder("remixed");
     getMostRemixed();
   };
 }

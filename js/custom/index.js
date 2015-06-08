@@ -4,7 +4,7 @@ function Index() {
   self = this;
 
   self.init = function() {
-  	hidder("none");
+  	hidder("start");
     $("#menu-toggle").click(function(e) {
       e.preventDefault();
       $("#wrapper").toggleClass("toggled");
@@ -13,11 +13,13 @@ function Index() {
 
   self.getMostViewed = function() {
   	hidder("bubble");
+  	$("#menu-toggle").trigger('click');
     getMostViewed();
   };
   
   self.getMostRemixed = function() {
-  	hidder("remixed");
+  	hidder("bubble_v2");
+  	$("#menu-toggle").trigger('click');
     getMostRemixed();
   };
 }

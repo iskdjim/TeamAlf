@@ -1,10 +1,10 @@
 
 var orgChart = (function() {
    var _margin = {
-       top:    20,
-       right:  20,
-       bottom: 20,
-       left:   20
+       top:    10,
+       right:  10,
+       bottom: 10,
+       left:   10
    },
    _root           = {},
    _nodes          = [],
@@ -17,8 +17,8 @@ var orgChart = (function() {
    _loadFunction   = null,
    /* Configuration */
    _duration       = 750,        /* Duration of the animations */
-   _rectW          = 150,        /* Width of the rectangle */
-   _rectH          = 50,         /* Height of the rectangle */
+   _rectW          = 70,        /* Width of the rectangle */
+   _rectH          = 30,         /* Height of the rectangle */
    _rectSpacing    = 20          /* Spacing between the rectangles */
    _fixedDepth     = 80,         /* Height of the line for child nodes */       
    _mode           = "line",     /* Choose the values "line" or "diagonal" */

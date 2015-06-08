@@ -1,8 +1,8 @@
 var children_prog;
-var apiurl = "https://pocketcode.org/api/projects/";
+var apiurl = "https://jsonp.afeld.me/?url=https://pocketcode.org/api/projects/";
 
 function getMostViewed() {
-	$.get('https://jsonp.afeld.me/?url='+apiurl+'/mostViewed.json?limit=10&offset=0', function(data){
+	$.get(apiurl+'/mostViewed.json?limit=10&offset=0', function(data){
 		if(data){
 			showData(data,"most-viewed");
 		}else{
@@ -12,12 +12,10 @@ function getMostViewed() {
 }
 
 function getMostRemixed() {
-	$.get('https://jsonp.afeld.me/?url='+apiurl+'/getMostRemixed.json?limit=10', function(data){
+	$.get('https://jsonp.afeld.me/?url=https://web-test.catrob.at/pocketcode/api/programs/getMostRemixed.json?limit=10', function(data){
 		if(data){
-			//showData(data,"most-remixed");
-			data = {"id":"1","desc":"Executive office","children":[{"id":"2","desc":"Sales","hasChild":true},{"id":"3","desc":"Marketing","hasChild":true},{"id":"4","desc":"Development","hasChild":true}]};
-			orgChart.initTree({id: "#remixed", data: data, modus: "diagonal", loadFunc: loadChilds});
-
+		
+			showData(data,"most-remixed");
 		}else{
 			return 0;
 		}
@@ -27,10 +25,8 @@ function getMostRemixed() {
 
 function getChildsForProject(id) {
 	var project_id = id;
-	$.get('https://jsonp.afeld.me/?url='+apiurl+'/getRemixOf.json?id='+project_id+'&depth=5', function(data){
+	$.getJSON('https://jsonp.afeld.me/?url=https://web-test.catrob.at/pocketcode/api/programs/getRemixOf.json?id='+project_id+'&depth=5', function(data){
 		if(data){
-			//console.log(data);
-			data = {"id":"1","desc":"Executive office","children":[{"id":"2","desc":"Sales","hasChild":true},{"id":"3","desc":"Marketing","hasChild":true},{"id":"4","desc":"Development","hasChild":true}]};
 			showData(data,"remixed-of");
 		}else{
 			return 0;
@@ -38,12 +34,33 @@ function getChildsForProject(id) {
 	});
 }
 
+function getInfoForID(id){
+	$.get(apiurl+'getInfoById.json?id='+id,function(data) {
+		hidder("detail_page");
+    	$('#detail_page h2.p_name').html(data.CatrobatProjects[0].ProjectName);
+    	$('#detail_page .p_image').attr("src",'https://pocketcode.org/'+data.CatrobatProjects[0].ScreenshotSmall);
+		$('#detail_page .p_desc').html('https://pocketcode.org/'+data.CatrobatProjects[0].Description);
+		$('#detail_page .p_author').html('https://pocketcode.org/'+data.CatrobatProjects[0].Author);
+		$('#detail_page .p_downloads').html('https://pocketcode.org/'+data.CatrobatProjects[0].Downloads);
+	});
+}
+
    
 function loadChilds(actualElement, successFunction) {
-   $.getJSON("https://jsonp.afeld.me/?url=http://blog.zubasoft.at/Examples/D3.js/OrgChart/getPositions.php?id=" + actualElement.id, 
-          function(data) {
-             successFunction(data);
-          });
+	$.getJSON('https://jsonp.afeld.me/?url=https://web-test.catrob.at/pocketcode/api/programs/getRemixOf.json?id='+actualElement.id+'&depth=5', function(data){
+    		var childs = [];
+    		$.each(data.childs, function(i,val){
+				var childs_flag = false;
+				if(val.childs != null){
+					//getRemixedChildren(val);
+					childs_flag = true;
+				}
+				childs.push({"id":val.id, "desc":val.name, "hasChild":childs_flag});
+    		});
+    	data = {"result": childs};
+		
+    	successFunction(data);
+	});
 }
 
 
@@ -62,6 +79,7 @@ function showData(data, type){
 			if(type == "most-viewed"){
 				children_bubble.push({"name":val.ProjectName,"size":val.Views, "id":val.ProjectId});
 			}else{
+
 				children_bubble.push({"name":val.ProjectName,"size":val.RemixCount, "id":val.ProjectId});
 			}
 		});
@@ -70,23 +88,34 @@ function showData(data, type){
 		//console.log(children);
 		//var treeData = [{"name":"Catrobat Top Viewed", "parent": "null", "children": children_tree}];
 		var bubbleData = {"name":"Catrobat Top Viewed", "children": children_bubble};
-		generateBubble(bubbleData);	
+		console.log(bubbleData);
+		
+		var dest = "svg-bubble_v2";
+		if(type == "most-viewed"){
+			var dest = "svg-bubble";
+		}
+		generateBubble(bubbleData,dest,type);	
 		//generateTree(treeData);
 
 	
 	}else if(type = "remixed-of"){
-		//data = data.CatrobatProjects;
-		children_prog = [];
-		console.log(data);
-		children_prog.push({"key":data.id, "name":data.name, "title":data.name});
+
+		children_prog;
+		childs = [];
+		
+	
 		$.each(data.childs, function(i,val){
 		
 			//if(val.childs.length() > 0){
+				console.log(val);
 			parent = data.id;
-			children_prog.push({"key":val.id, "name":val.name, "title":val.name, "parent":parent});	
+			//childs.push({"id":val.id, "desc":val.name, "hasChild":true});	
+			var childs_flag = false;
 			if(val.childs != null){
-				getRemixedChildren(val);
+				//getRemixedChildren(val);
+				childs_flag = true;
 			}
+			childs.push({"id":val.id, "desc":val.name, "hasChild":childs_flag});
 			//}
 			//if(val.RemixOf){
 			//	children_prog.push({"key":val.ProjectId, "name":val.ProjectName, "title":val.ProjectName, "parent":val.RemixOf});	
@@ -95,11 +124,17 @@ function showData(data, type){
 			//}
 			
 		});
-
+		children_prog = {"id":data.id, "desc":data.name, "children": childs};
 		//console.log(children_prog);
-		prog_data = { "class": "go.TreeModel", "nodeDataArray": children_prog };
-
-		initGo();
+		//prog_data = { "class": "go.TreeModel", "nodeDataArray": children_prog };
+		//console.log(children_prog);
+		//initGo();
+		
+		//data = {"id":"1","desc":"Executive office","children":[{"id":"2","desc":"Sales","hasChild":true},{"id":"3","desc":"Marketing","hasChild":true},{"id":"4","desc":"Development","hasChild":true}]};
+		console.log(children_prog);
+		console.log(data);
+		orgChart.initTree({id: "#remixed", data: children_prog, modus: "diagonal", loadFunc: loadChilds});
+		hidder("remixed");
 	
 	}
 }
@@ -194,7 +229,7 @@ function generateTree(treeData){
 	}
 }
 
-function generateBubble(bubbleData){
+function generateBubble(bubbleData, dest, type_chart){
 	var diameter = 460,
     format = d3.format(",d"),
     color = d3.scale.category20c();
@@ -202,9 +237,9 @@ function generateBubble(bubbleData){
 
 	var bubble = d3.layout.pack()
 	    .sort(null)
-	    .size([$(window).width()-20, $(window).height()])
+	    .size([$(window).width()-40, $(window).height()])
 	
-	var svg = d3.select("body #svg-bubble")
+	var svg = d3.select("body #"+dest)
 	    .attr("class", "bubble");
 	
 	  var node = svg.selectAll(".node")
@@ -220,7 +255,7 @@ function generateBubble(bubbleData){
 	  node.append("circle")
 	      .attr("r", function(d) { return d.r; })
 	      .style("fill", "#fff")
-	      .on("click", function(d){ getChildsForProject(d.id)});
+	      .on("click", function(d){ if(type_chart == "most-remixed"){getChildsForProject(d.id)}else{getInfoForID(d.id)}});
 	
 	  node.append("text")
 	      .attr("dy", ".3em")

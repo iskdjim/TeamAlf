@@ -5,11 +5,16 @@
       body{
       	width:100%;
       	height:100%;
+      	background-color:#05222a;
       }
 
 .bubble text {
   font: 10px sans-serif;
 
+}
+
+.detail{
+	cursor:pointer;
 }
 
 .node circle {

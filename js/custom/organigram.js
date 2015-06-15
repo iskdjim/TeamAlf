@@ -17,8 +17,8 @@ var orgChart = (function() {
    _loadFunction   = null,
    /* Configuration */
    _duration       = 750,        /* Duration of the animations */
-   _rectW          = 70,        /* Width of the rectangle */
-   _rectH          = 30,         /* Height of the rectangle */
+   _rectW          = 80,        /* Width of the rectangle */
+   _rectH          = 60,         /* Height of the rectangle */
    _rectSpacing    = 20          /* Spacing between the rectangles */
    _fixedDepth     = 80,         /* Height of the line for child nodes */       
    _mode           = "line",     /* Choose the values "line" or "diagonal" */
@@ -113,6 +113,18 @@ var orgChart = (function() {
                .text(function (d) {
                          return d.desc;
                });
+               
+          nodeEnter.append("text")
+               .attr("x", _rectW / 2)
+               .attr("y", _rectH-10)
+               .attr("dy", ".35em")
+               .attr("class", "detail")
+               .on("click", function(d){ getInfoForID(d.id) })
+               .attr("text-anchor", "middle")
+               .style("cursor", function (d) { return (d.children || d._children || d.hasChild) ? "pointer" : "default"; })
+               .text(function (d) {
+                         return "Show Informations";
+               });       
 
       // Transition nodes to their new position.
       var nodeUpdate = node.transition()

@@ -1,5 +1,6 @@
 var children_prog;
 var apiurl = "https://jsonp.afeld.me/?url=https://web-test.catrob.at/pocketcode/api/projects/";
+var state;
 
 function getMostViewed() {
 	$.get(apiurl+'mostViewed.json?limit=10&offset=0', function(data){
@@ -180,7 +181,22 @@ function hidder(show){
 	});
 	
 }
+$(document).ready(function(){
+	
 
+$('.back-btn').click(function(){
+	
+	if(state == "viewed"){
+		index.getMostViewed();
+	}else if(state == "remixed"){
+		index.getMostRemixed();
+	}else if(state == "downloaded"){
+		index.getMostDownloaded();
+	}
+	$("#menu-toggle").trigger('click');
+});
+
+});
 function generateTree(treeData){
 		
 	// ************** Generate the tree diagram	 *****************

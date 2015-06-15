@@ -4,6 +4,8 @@ function Index() {
   self = this;
 
   self.init = function() {
+  	alert("test");
+  	
   	hidder("start");
     $("#menu-toggle").click(function(e) {
       e.preventDefault();

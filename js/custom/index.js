@@ -9,6 +9,7 @@ function Index() {
       e.preventDefault();
       $("#wrapper").toggleClass("toggled");
     });
+    return 1;
   };
 
   self.getMostViewed = function() {

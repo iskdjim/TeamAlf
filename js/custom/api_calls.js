@@ -28,6 +28,7 @@ function getMostDownloaded() {
 		if(data){
 		
 			showData(data,"most-downloaded");
+			
 		}else{
 			return 0;
 		}
@@ -46,14 +47,22 @@ function getChildsForProject(id) {
 }
 
 function getInfoForID(id){
-	$.get(apiurl+'getInfoById.json?id='+id,function(data) {
-		hidder("detail_page");
-    	$('#detail_page h2.p_name').html(data.CatrobatProjects[0].ProjectName);
-    	$('#detail_page .p_image').attr("src",'https://web-test.catrob.at/'+data.CatrobatProjects[0].ScreenshotSmall);
-		$('#detail_page .p_desc').html(data.CatrobatProjects[0].Description);
-		$('#detail_page .p_author').html(data.CatrobatProjects[0].Author);
-		$('#detail_page .p_downloads').html(data.CatrobatProjects[0].Downloads);
-	});
+	if($.isNumeric(id)){
+		$.get(apiurl+'getInfoById.json?id='+id,function(data) {
+			if(data){
+				hidder("detail_page");
+		    	$('#detail_page h2.p_name').html(data.CatrobatProjects[0].ProjectName);
+		    	$('#detail_page .p_image').attr("src",'https://web-test.catrob.at/'+data.CatrobatProjects[0].ScreenshotSmall);
+				$('#detail_page .p_desc').html(data.CatrobatProjects[0].Description);
+				$('#detail_page .p_author').html(data.CatrobatProjects[0].Author);
+				$('#detail_page .p_downloads').html(data.CatrobatProjects[0].Downloads);
+			}else{
+				return 0;
+			}
+		});
+	}else{
+		return 0;
+	}
 }
 
    
@@ -171,31 +180,33 @@ function getRemixedChildren(element){
 
 function hidder(show){
 	
-	$.each($('.row .page-chart'), function(i,val){
-		//console.log(val);
-		if(show == $(val).attr('id')){
-			$(val).show();
-		}else{
-			$(val).hide();
-		}
-	});
+	if(show != ""){
+		$.each($('.row .page-chart'), function(i,val){
+			//console.log(val);
+			if(show == $(val).attr('id')){
+				$(val).show();
+			}else{
+				$(val).hide();
+			}
+		});
+		return 1;
+	}else{
+		return 0;
+	}
 	
 }
 $(document).ready(function(){
-	
-
-$('.back-btn').click(function(){
-	
-	if(state == "viewed"){
-		index.getMostViewed();
-	}else if(state == "remixed"){
-		index.getMostRemixed();
-	}else if(state == "downloaded"){
-		index.getMostDownloaded();
-	}
-	$("#menu-toggle").trigger('click');
-});
-
+	$('.back-btn').click(function(){
+		
+		if(state == "viewed"){
+			index.getMostViewed();
+		}else if(state == "remixed"){
+			index.getMostRemixed();
+		}else if(state == "downloaded"){
+			index.getMostDownloaded();
+		}
+		$("#menu-toggle").trigger('click');
+	});
 });
 function generateTree(treeData){
 		

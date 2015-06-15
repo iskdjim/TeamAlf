@@ -1,7 +1,14 @@
 <!DOCTYPE html>
 <html>
 <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
     <title>PocketStats</title>
+<<<<<<< HEAD
 <<<<<<< master
     <script src="phonegap.js"></script>
     <script src="jquery.js"></script>
@@ -60,6 +67,21 @@ path.link {
 
     <!-- JavaScript -->
     <script src="phonegap.js"></script>
+=======
+
+    <!-- CSS -->
+    <link rel="stylesheet" href="css/bootstrap.min.css">
+    <link rel="stylesheet" href="css/simple-sidebar.css">
+    <!-- CSS Custom-->
+    <link rel="stylesheet" href="css/custom/index.css">
+    <link rel="stylesheet" href="css/custom/organigram.css">
+
+    <link rel="stylesheet" href="css/style.css">
+
+
+    <!-- JavaScript -->
+    <script src="phonegap.js"></script>
+>>>>>>> api-feaure
     <script src="js/jquery.js"></script>
     <script src="js/bootstrap.min.js"></script>
     <script src="js/d3.min.js"></script>
@@ -68,7 +90,13 @@ path.link {
     <script src="js/custom/index.js"></script>
     <script src="js/custom/organigram.js"></script>
     <script src="js/custom/api_calls.js"></script>
+<<<<<<< HEAD
 
+=======
+    <script src="js/custom/go_functions.js"></script>
+   
+   
+>>>>>>> api-feaure
    
 
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
@@ -78,12 +106,90 @@ path.link {
     <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
     <![endif]-->
 
+<<<<<<< HEAD
 >>>>>>> local
+=======
+>>>>>>> api-feaure
 </head>
 <body>
-<svg id="svg-bubble"></svg>
-<svg id="svg-tree"></svg>
 
+<div id="wrapper">
 
+    <!-- Sidebar -->
+    <div id="sidebar-wrapper">
+        <ul class="sidebar-nav">
+            <li class="sidebar-brand">
+                <a href="#">
+                    PocketStats
+                </a>
+            </li>
+            <li>
+                <a href="#" onclick="index.getMostViewed()">Most Viewed</a>
+            </li>
+            <li>
+                <a href="#" onclick="index.getMostRemixed()">Most Remixed</a>
+            </li>
+            <li>
+                <a href="#" onclick="index.getMostDownloaded()">Most Downloaded</a>
+            </li>
+                        
+        </ul>
+    </div>
+    <!-- /#sidebar-wrapper -->
+
+    <!-- Page Content -->
+    <div id="page-content-wrapper">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-lg-12" style="padding-left:0px;padding-right:0px;">
+                    <div>
+                        <a href="#menu-toggle" class="btn btn-default" id="menu-toggle">Toggle Menu</a>
+                    </div>
+                    <div id="start" class="page-chart">
+                    	<h2>Pocket Code</h2>
+                   		<p>Pocket Code allows you to create your own games, animations, interactive music videos, and many kind of other apps, directly on your phone or tablet. </p>
+                   		<p>Here are some statistics of the Pocket Code projects, have fun.</p> 	
+                   </div>
+                    <div id="bubble" class="page-chart">
+                   		<h2>Most Viewed Programms</h2>
+                   		<svg id="svg-bubble"></svg>
+                    </div>
+                    <div id="bubble_v2" class="page-chart">
+                    	<h2>Most Remixed Programms</h2>
+                   		<svg id="svg-bubble_v2"></svg>
+                    </div>
+					<div id="remixed"  class="page-chart">
+						
+					</div>
+					<div id="downloaded" class="page-chart">
+                    	<h2>Most Downloaded Programms</h2>
+                   		<svg id="svg-bubble_v3"></svg>
+                    </div>
+					<div id="detail_page" class="page-chart">
+						<h2 class="p_name"></h2>
+						<div class="left">
+							<img class="p_image" src="" alt="" />
+						</div>
+						<div class="right">
+							Descirption: <p class="p_desc"></p>
+							Author: <p class="p_author"></p>
+							Downloads: <p class="p_downloads"></p>
+							
+						</div>
+						<div class="clearer"></div>
+					</div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- /#page-content-wrapper -->
+
+</div>
+<!-- /#wrapper -->
+
+<script>
+    var index = new Index();
+    index.init();
+</script>
 </body>
 </html>

@@ -22,6 +22,16 @@ function getMostRemixed() {
 	});
 }
 
+function getMostDownloaded() {
+	$.get('https://jsonp.afeld.me/?url=https://web-test.catrob.at/pocketcode/api/projects/mostDownloaded.json?limit=10&offset=0', function(data){
+		if(data){
+		
+			showData(data,"most-downloaded");
+		}else{
+			return 0;
+		}
+	});
+}
 
 function getChildsForProject(id) {
 	var project_id = id;
@@ -67,7 +77,7 @@ function loadChilds(actualElement, successFunction) {
 
 
 function showData(data, type){
-	if(type == "most-viewed" || type == "most-remixed"){
+	if(type == "most-viewed" || type == "most-remixed" || type == "most-downloaded"){
 		data = data.CatrobatProjects;
 		//var children_tree = [];
 		var children_bubble = [];
@@ -78,6 +88,9 @@ function showData(data, type){
 			
 			if(type == "most-viewed"){
 				children_bubble.push({"name":val.ProjectName,"size":val.Views, "id":val.ProjectId});
+			}else if(type == "most-downloaded"){
+				children_bubble.push({"name":val.ProjectName,"size":val.Downloads, "id":val.ProjectId});
+			
 			}else{
 
 				children_bubble.push({"name":val.ProjectName,"size":val.RemixCount, "id":val.ProjectId});
@@ -94,7 +107,11 @@ function showData(data, type){
 		if(type == "most-viewed"){
 			var dest = "svg-bubble";
 		}
-		generateBubble(bubbleData,dest,type);	
+
+		if(type == "most-downloaded"){
+			var dest = "svg-bubble_v3";
+		}
+		generateBubble(bubbleData,dest,type);
 		//generateTree(treeData);
 
 	
@@ -137,6 +154,7 @@ function showData(data, type){
 		hidder("remixed");
 	
 	}
+	
 }
 
 function getRemixedChildren(element){
@@ -233,7 +251,7 @@ function generateBubble(bubbleData, dest, type_chart){
 	var diameter = 460,
     format = d3.format(",d"),
     color = d3.scale.category20c();
-   
+   console.log(bubbleData);
 
 	var bubble = d3.layout.pack()
 	    .sort(null)

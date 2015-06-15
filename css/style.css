@@ -54,11 +54,11 @@ h1{
 }
 
 
-#wrapper, #page-content-wrapper,.container-fluid, .row, .col-lg-12, #bubble, #bubble_v2, #detail_page {
+#wrapper, #page-content-wrapper,.container-fluid, .row, .col-lg-12, #bubble, #bubble_v2, #detail_page, #downloaded {
 	height:100%;
 }
 
-#svg-tree,#svg-bubble,#svg-bubble_v2,#detail_page{
+#svg-tree,#svg-bubble,#svg-bubble_v2,#svg-bubble_v3,#detail_page{
 	width:100%;
 	height:100%;
 	margin:0 auto;

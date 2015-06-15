@@ -22,4 +22,11 @@ function Index() {
   	$("#menu-toggle").trigger('click');
     getMostRemixed();
   };
+
+  self.getMostDownloaded = function() {
+  	hidder("downloaded");
+  	$("#menu-toggle").trigger('click');
+    getMostDownloaded();
+  };
+
 }

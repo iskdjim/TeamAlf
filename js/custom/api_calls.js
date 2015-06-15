@@ -1,8 +1,8 @@
 var children_prog;
-var apiurl = "https://jsonp.afeld.me/?url=https://pocketcode.org/api/projects/";
+var apiurl = "https://jsonp.afeld.me/?url=https://web-test.catrob.at/pocketcode/api/projects/";
 
 function getMostViewed() {
-	$.get(apiurl+'/mostViewed.json?limit=10&offset=0', function(data){
+	$.get(apiurl+'mostViewed.json?limit=10&offset=0', function(data){
 		if(data){
 			showData(data,"most-viewed");
 		}else{
@@ -38,10 +38,10 @@ function getInfoForID(id){
 	$.get(apiurl+'getInfoById.json?id='+id,function(data) {
 		hidder("detail_page");
     	$('#detail_page h2.p_name').html(data.CatrobatProjects[0].ProjectName);
-    	$('#detail_page .p_image').attr("src",'https://pocketcode.org/'+data.CatrobatProjects[0].ScreenshotSmall);
-		$('#detail_page .p_desc').html('https://pocketcode.org/'+data.CatrobatProjects[0].Description);
-		$('#detail_page .p_author').html('https://pocketcode.org/'+data.CatrobatProjects[0].Author);
-		$('#detail_page .p_downloads').html('https://pocketcode.org/'+data.CatrobatProjects[0].Downloads);
+    	$('#detail_page .p_image').attr("src",'https://web-test.catrob.at/'+data.CatrobatProjects[0].ScreenshotSmall);
+		$('#detail_page .p_desc').html(data.CatrobatProjects[0].Description);
+		$('#detail_page .p_author').html(data.CatrobatProjects[0].Author);
+		$('#detail_page .p_downloads').html(data.CatrobatProjects[0].Downloads);
 	});
 }
 
